@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -36,13 +38,19 @@ import javax.swing.JTextPane;
 public class RoadWorkerGUI extends JFrame
 {
 	private RoadWorkFile file = new RoadWorkFile();
+	private JTextField RWSearch;
+	private JTextArea RWresults;
 	
 	public RoadWorkerGUI() throws FileNotFoundException
 	{
 		super("Road Worker Search");
-		setPreferredSize(new Dimension(500,200));
+		setPreferredSize(new Dimension(500,500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		RWresults = new JTextArea(10, 10);
+		RWresults.setEditable(false);
+		
+        add(new JScrollPane(RWresults), BorderLayout.NORTH);
 		
 		JPanel rwPanel = new JPanel(new BorderLayout(10, 10));
 	    rwPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -51,7 +59,7 @@ public class RoadWorkerGUI extends JFrame
         rwPanel.add(searchLabel, BorderLayout.NORTH);
 	    
         // Center panel holds the text field
-        JTextField RWSearch = new JTextField();
+        RWSearch = new JTextField();
         RWSearch.setPreferredSize(new Dimension(0, 30));      // Height only
         RWSearch.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         rwPanel.add(RWSearch, BorderLayout.CENTER);
@@ -59,6 +67,7 @@ public class RoadWorkerGUI extends JFrame
 		//Adds Button
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton RWButton = new RoadWorkerButton();
+        RWButton.addActionListener(new RoadWorkListener(this));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         buttonPanel.add(RWButton);
         rwPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -77,6 +86,16 @@ public class RoadWorkerGUI extends JFrame
 		add(rwPanel);
 		pack();
 		setVisible(true);
+	}
+	
+	public JTextField getRWSearch()
+	{
+		return RWSearch;
+	}
+	
+	public JTextArea getRWResults()
+	{
+		return RWresults;
 	}
 	
 }
