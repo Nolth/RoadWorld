@@ -7,11 +7,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -31,24 +31,38 @@ import javax.swing.JTextPane;
  * Responsibilities of class: Class that creates the GUI page.
  * 
  */
+ 
+
 public class RoadWorkerGUI extends JFrame
 {
 	private RoadWorkFile file = new RoadWorkFile();
 	
 	public RoadWorkerGUI() throws FileNotFoundException
 	{
-		System.out.println("DdDd");
-		JFrame rwPanel = new JFrame();
-		rwPanel.setPreferredSize(new Dimension(500,500));
+		super("Road Worker Search");
+		setPreferredSize(new Dimension(500,200));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel Sliders = new JPanel();
-		Sliders.setLayout(new BorderLayout());
+		
+		JPanel rwPanel = new JPanel(new BorderLayout(10, 10));
+	    rwPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		
+	    JLabel searchLabel = new JLabel("Enter search terms for road work:");
+        rwPanel.add(searchLabel, BorderLayout.NORTH);
+	    
+        // Center panel holds the text field
+        JTextField RWSearch = new JTextField();
+        RWSearch.setPreferredSize(new Dimension(0, 30));      // Height only
+        RWSearch.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        rwPanel.add(RWSearch, BorderLayout.CENTER);
+		
 		//Adds Button
-		JButton RWButton = new RoadWorkerButton();
-		JTextField RWSearch = new JTextField();
-		
-		RWSearch.setPreferredSize(new Dimension(500,20));
-		
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton RWButton = new RoadWorkerButton();
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        buttonPanel.add(RWButton);
+        rwPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
 		try 
 		{
 			String results = file.readRoadResults();
@@ -60,17 +74,9 @@ public class RoadWorkerGUI extends JFrame
 			throw new FileNotFoundException();
 		}
 		
-		Sliders.add(RWButton, BorderLayout.SOUTH);
-		
-		Sliders.add(RWSearch, BorderLayout.CENTER);
-		this.add(Sliders, BorderLayout.SOUTH);
-		//add(RWButton);
-		
-		rwPanel.setSize(500, 500);
-		
-		setName("Gone Fishing");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(rwPanel);
 		pack();
 		setVisible(true);
 	}
+	
 }

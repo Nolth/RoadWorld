@@ -13,8 +13,10 @@ public class RoadWorkFile
 	private static BufferedReader scanBuffered = null;
 	private static ArrayList<String> myList = new ArrayList<>();
 	private int count;
+	private int testcont;
 	
-    public String readRoadResults() throws FileNotFoundException {
+    public String readRoadResults() throws FileNotFoundException 
+    {
         StringBuilder content = new StringBuilder();
 
         try (Scanner scan = new Scanner(new File("DOOOD.csv"))) 
@@ -22,14 +24,15 @@ public class RoadWorkFile
         	//Do no put Print statements inside while, it will crash.
             while (scan.hasNextLine()) 
             {
-            	StringBuilder HH = content.append(scan.nextLine()).append("\n");
+            	testcont++;
+        		StringBuilder HH = content.append(scan.nextLine()).append("\n");
           	  	myList.add(HH.toString());
           	  	count++;
           	  	HH.setLength(0);
             }
-            System.out.println("List: " + myList.get(5));
+            System.out.println("List: " + myList.get(1));
         }
-
+        
         return content.toString();
     }
     
